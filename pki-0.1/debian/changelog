@@ -1,0 +1,5 @@
+pki (0.1-1) UNRELEASED; urgency=medium
+
+  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+
+ -- Dokukin Vyacheslav Olegovich <toorrp4@gmail.com>  Tue, 21 Nov 2023 03:00:03 +0300

@@ -1,0 +1,5 @@
+*_all.deb
+*_amd64.build
+*_amd64.buildinfo
+*_amd64.changes
+rm_pki_deb.md
