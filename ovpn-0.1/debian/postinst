@@ -17,6 +17,14 @@ set -e
 # for details, see https://www.debian.org/doc/debian-policy/ or
 # the debian-policy package
 
+PATHOPENVPN=/etc/openvpn/server/
+PATHOPENVPNEXE=$(whereis openvpn)
+PATHRSA="/opt/easy-rsa"
+PATHRSAREQ=${PATHRSA}/pki/reqs/server.req
+PATHRSAKEY=${PATHRSA}/pki/private/server.key
+PATHRSACRT=${PATHRSA}/pki/issued/server.crt /etc/openvpn/server/
+PATHRSACA=${PATHRSA}/pki/ca.crt /etc/openvpn/server/
+PATHRSATA=${PATHRSA}/pki/ta.key
 
 case "$1" in
     configure)
@@ -32,12 +40,14 @@ case "$1" in
 
         # allow traffic routing
         echo net.ipv4.ip_forward=1 >> /etc/sysctl.conf
+        sudo sysctl -p
 
         # set name network interface
-        ETH=$(ip r | grep default | awk '/'dev'/ {print $5}')
-        if [ -z $ETH ]; then
+        IFACE=$(route | grep default | awk '{print $8}')
+        if [ -z $IFACE ]; then
             echo "Error - fail get name network interface!"
-            read -p "Please enter name network interface: " ETH
+            route
+            read -p "Please enter name network interface: " IFACE
         fi
 
         # set name transport protocol
@@ -53,15 +63,60 @@ case "$1" in
         fi
 
         # OpenVPN
-        iptables -A INPUT -i "$ETH" -m state --state NEW -p "$PROTO" --dport "$PORT" -j ACCEPT
+        iptables -A INPUT -i "$IFACE" -m state --state NEW -p "$PROTO" --dport "$PORT" -j ACCEPT
         # Allow TUN interface connection to OpenVPN server
         iptables -A INPUT -i tun+ -j ACCEPT
         # Allow TUN interface connection to be forwarded throuth other interface
         iptables -A FORWARD -i tun+ -j ACCEPT
-        iptables -A FORWARD -i tun+ -o "$ETH" -m state --state RELATED,ESTABLISHED -j ACCEPT
-        iptables -A FORWARD -i "$ETH" -o tun+ -m state --state RELATED,ESTABLISHED -j ACCEPT
+        iptables -A FORWARD -i tun+ -o "$IFACE" -m state --state RELATED,ESTABLISHED -j ACCEPT
+        iptables -A FORWARD -i "$IFACE" -o tun+ -m state --state RELATED,ESTABLISHED -j ACCEPT
         # NAT the VPN client traffic to the internet
-        iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o "$ETH" -j MASQUERADE
+        iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o "$IFACE" -j MASQUERADE
+
+        # create group
+        sudo groupadd nobody
+
+        # change dir
+        cd ${PATHRSA}
+
+        # generate REQ CA & KEY ovpn server
+        ${PATHRSA}/easyrsa gen-req server nopass
+
+        if [ ! -f ${PATHEASYRSAREQ} ]; then
+            echo "Error: fail generate file request - ${PATHEASYRSAREQ}"
+            exit 1
+        fi
+
+        if [ ! -f ${PATHEASYRSAKEY} ]; then
+            echo "Error: fail generate file key - ${PATHEASYRSAKEY}"
+            exit 1
+        fi
+
+        # sign REQ CA ovpn server
+        ${PATHRSA}/easyrsa sign-req server server
+
+        # create server dir
+        sudo mkdir -p ${PATHOPENVPN}
+
+        if [ $? == 0 ]; then
+
+            sudo cp ${PATHRSAKEY} ${PATHOPENVPN}
+            sudo cp ${PATHRSACRT} ${PATHOPENVPN}
+            sudo cp ${PATHRSACA} ${PATHOPENVPN}
+
+            # gen TLS server key
+            ${PATHOPENVPNEXE} --genkey --secret ${PATHRSATA}
+
+            if [ ! -f ${PATHRSATA} ]; then
+                echo "Error: fail generate file key - ${PATHRSATA}"
+                exit 1
+            fi
+
+            sudo cp ${PATHRSATA} ${PATHOPENVPN}
+        else
+            echo "Error: fail create dir - ${PATHOPENVPN}"
+            exit $?
+        fi
 
     ;;
 
