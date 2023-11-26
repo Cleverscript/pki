@@ -18,7 +18,7 @@ set -e
 # the debian-policy package
 
 PATHOPENVPN=/etc/openvpn/server/
-PATHOPENVPNEXE=$(whereis openvpn)
+PATHOPENVPNEXE=$(whereis openvpn | awk '{print $2}')
 PATHRSA="/opt/easy-rsa"
 PATHRSAREQ=${PATHRSA}/pki/reqs/server.req
 PATHRSAKEY=${PATHRSA}/pki/private/server.key
@@ -70,8 +70,10 @@ case "$1" in
         # NAT the VPN client traffic to the internet
         iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o "$IFACE" -j MASQUERADE
 
-        # create group
-        sudo groupadd nobody
+        # create group "nobody"
+        if [ $(sudo cat /etc/group | grep nobody) == 1 ]; then
+            sudo groupadd nobody && echo "Success create group nobody"
+        fi
 
         # change dir
         cd ${PATHRSA}
@@ -95,7 +97,7 @@ case "$1" in
         # create server dir
         sudo mkdir -p ${PATHOPENVPN}
 
-        if [ $? == 0 ]; then
+        if [ -d ${PATHOPENVPN} ]; then
 
             sudo cp ${PATHRSAKEY} ${PATHOPENVPN}
             sudo cp ${PATHRSACRT} ${PATHOPENVPN}
@@ -110,6 +112,9 @@ case "$1" in
             fi
 
             sudo cp ${PATHRSATA} ${PATHOPENVPN}
+
+            echo "Server files list:"
+            sudo ls -la ${PATHOPENVPN}
         else
             echo "Error: fail create dir - ${PATHOPENVPN}"
             exit $?
