@@ -22,8 +22,8 @@ PATHOPENVPNEXE=$(whereis openvpn)
 PATHRSA="/opt/easy-rsa"
 PATHRSAREQ=${PATHRSA}/pki/reqs/server.req
 PATHRSAKEY=${PATHRSA}/pki/private/server.key
-PATHRSACRT=${PATHRSA}/pki/issued/server.crt /etc/openvpn/server/
-PATHRSACA=${PATHRSA}/pki/ca.crt /etc/openvpn/server/
+PATHRSACRT=${PATHRSA}/pki/issued/server.crt
+PATHRSACA=${PATHRSA}/pki/ca.crt
 PATHRSATA=${PATHRSA}/pki/ta.key
 
 case "$1" in
