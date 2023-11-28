@@ -70,6 +70,9 @@ case "$1" in
         # NAT the VPN client traffic to the internet
         iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o "$IFACE" -j MASQUERADE
 
+        # iptables save
+        sudo netfilter-persistent save
+
         # create group "nobody"
         if [ $(sudo cat /etc/group | grep nobody) == 1 ]; then
             sudo groupadd nobody && echo "Success create group nobody"
