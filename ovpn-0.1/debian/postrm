@@ -21,6 +21,10 @@ set -e
 
 case "$1" in
     purge|remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
+
+        # remove depends
+        sudo apt remove iptables-persistent net-tools openvpn && sudo apt autoremove
+
     ;;
 
     *)
