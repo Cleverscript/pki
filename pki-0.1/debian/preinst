@@ -21,7 +21,7 @@ case "$1" in
             tar -zcf /tmp/pki_easy-rsa_back_$(date +"%d.%m.%Y_%H%M%S").tar.gz ${PATHEASYRSAUSR}
             rm -rf "${PATHEASYRSAUSR}" 
         fi
-        mkdir "${PATHEASYRSAUSR}"
+        mkdir -p "${PATHEASYRSAUSR}"
         chmod 700 ${PATHEASYRSAUSR}
     ;;
 

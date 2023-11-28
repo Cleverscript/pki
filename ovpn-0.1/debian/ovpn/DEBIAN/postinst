@@ -37,7 +37,9 @@ case "$1" in
 
         # allow traffic routing
         echo net.ipv4.ip_forward=1 >> /etc/sysctl.conf
+        echo "allow traffic routing:"
         sudo sysctl -p
+        echo "---"
 
         # set name network interface
         IFACE=$(route | grep default | awk '{print $8}')
@@ -76,6 +78,7 @@ case "$1" in
         # create group "nobody"
         if [ $(sudo cat /etc/group | grep nobody) == 1 ]; then
             sudo groupadd nobody && echo "Success create group nobody"
+            echo "---"
         fi
 
         # change dir
@@ -118,6 +121,10 @@ case "$1" in
 
             echo "Server files list:"
             sudo ls -la ${PATHOPENVPN}
+            echo "---"
+            echo "Server routing table:"
+            sudo route
+            echo "---"
         else
             echo "Error: fail create dir - ${PATHOPENVPN}"
             exit $?
