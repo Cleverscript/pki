@@ -30,7 +30,7 @@ case "$1" in
     configure)
 
         # Configure firewall
-        UFW=sudo ufw status
+        UFW=$(sudo ufw status)
         if [ $UFW != 'Status: inactive' ]; then
             firewall-rules create allow-1194 --allow=udp:1194 --direction=INGRESS
         fi

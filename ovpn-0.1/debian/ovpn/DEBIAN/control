@@ -2,8 +2,8 @@ Package: ovpn
 Version: 0.1-1
 Architecture: all
 Maintainer: Dokukin Vyacheslav Olegovich <toorrp4@gmail.com>
-Installed-Size: 33
-Depends: iptables-persistent, openvpn, easy-rsa, pki
+Installed-Size: 34
+Depends: iptables-persistent, net-tools, openvpn, easy-rsa, pki
 Section: unknown
 Priority: optional
 Homepage: <insert the upstream URL, if relevant>

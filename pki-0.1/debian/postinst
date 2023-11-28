@@ -51,6 +51,7 @@ case "$1" in
             echo "Success create CA!"
             cat $PATHEASYRSACA
             cat ${PATHEASYRSAVARS} | grep "# email.)" -A7
+            echo "---"
         else
             echo "Error: fail create CA!"
             exit 1
