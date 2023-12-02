@@ -1,14 +1,16 @@
 #!/bin/bash
 
 PATHEASYRSAUSR="/opt/easy-rsa"
-LOGIN=$USER
+
+# check argument (client login)
+if [ -z "$1" ]; then
+  echo "Error: $0 CLIENT_NAME - break!"
+  exit 1
+fi
+
+LOGIN="$1"
 
 cd ${PATHEASYRSAUSR}
-
-read "Enter your user login [${USER}]: " login
-if [ ! -z $login ]; then
-    LOGIN=$login
-fi
 
 ./easyrsa gen-req ${LOGIN} nopass
 

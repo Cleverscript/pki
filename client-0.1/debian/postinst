@@ -70,7 +70,7 @@ case "$1" in
         chmod +x ${PATHUSRSCRIPTS}/client_gen_req.sh && chmod +x ${PATHUSRSCRIPTS}/client_gen_ovpn.sh
 
         echo "Installation completed. Start creating a certificate issue request with the command: "
-        echo "$ ${PATHUSRSCRIPTS}/client_gen_req.sh"
+        echo "$ ${PATHUSRSCRIPTS}/client_gen_req.sh YOUR_USER_LOGIN"
         echo "And follow further instructions..."
     ;;
 
