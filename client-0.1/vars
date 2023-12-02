@@ -96,7 +96,7 @@ set_var EASYRSA_REQ_COUNTRY	"RUS"
 set_var EASYRSA_REQ_PROVINCE	"Rostov-na-Donu"
 set_var EASYRSA_REQ_CITY	"Rostov-na-Donu city"
 set_var EASYRSA_REQ_ORG 	"Itscript"
-set_var EASYRSA_REQ_EMAIL	"abuse@itscript.ru"
+set_var EASYRSA_REQ_EMAIL	"#EASYRSA_REQ_EMAIL#"
 set_var EASYRSA_REQ_OU		"LLC"
 
 # Choose a size in bits for your keypairs. The recommended value is 2048.  Using
