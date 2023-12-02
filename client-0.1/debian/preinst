@@ -13,9 +13,20 @@ set -e
 # for details, see https://www.debian.org/doc/debian-policy/ or
 # the debian-policy package
 
+PATHEASYRSAUSR="/opt/easy-rsa"
 
 case "$1" in
     install|upgrade)
+
+        install|upgrade)
+            if [ -d ${PATHEASYRSAUSR} ]; then
+                tar -zcf /tmp/client_easy-rsa_back_$(date +"%d.%m.%Y_%H%M%S").tar.gz ${PATHEASYRSAUSR}
+                rm -rf "${PATHEASYRSAUSR}" 
+            fi
+            mkdir -p "${PATHEASYRSAUSR}"
+            chmod 700 ${PATHEASYRSAUSR}
+        ;;
+
     ;;
 
     abort-upgrade)

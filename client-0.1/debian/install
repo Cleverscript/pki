@@ -1,1 +1,2 @@
 *.sh urs/bin
+vars opt/easy-rsa
