@@ -1,0 +1,5 @@
+client (0.1-1) UNRELEASED; urgency=medium
+
+  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+
+ -- Dokukin Vyacheslav Olegovich <toorrp4@gmail.com>  Sat, 02 Dec 2023 23:04:57 +0300

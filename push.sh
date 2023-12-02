@@ -11,11 +11,14 @@ if [ -z $HOST ]; then
     read -p "Error - enter IP or domain remote host: " HOST
 fi
 
-rm -f pki_0.1.* && rm -f ovpn_0.1-1_*
+rm -f pki_0.1.* && rm -f ovpn_0.1-1_* && rm -f client_0.1-1_*
 
+# generate .deb packets
+cd pki-0.1/debian && debuild -b
+cd ../../
 cd ovpn-0.1/debian && debuild -b
 cd ../../
-cd pki-0.1/debian && debuild -b
+cd client-0.1/debian && debuild -b
 cd ../../
 
 
