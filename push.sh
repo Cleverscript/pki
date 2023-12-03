@@ -4,11 +4,24 @@ LOGIN=$1
 HOST=$2
 
 if [ -z $LOGIN ]; then
-    read -p "Error - enter login: " LOGIN
+    echo -e "\033[31m"
+    read -p "Error - enter login remote host: " LOGIN
+    echo -e "\033[0m"
 fi
 
 if [ -z $HOST ]; then
+    echo -e "\033[31m"
     read -p "Error - enter IP or domain remote host: " HOST
+    echo -e "\033[0m"
+fi
+
+if [ -z $LOGIN ]; then
+    echo -e "\033[31m Error - empty login remote host -break! \033[0m"
+    exit 1
+fi
+if [ -z $HOST ]; then
+    echo -e "\033[31m Error - empty IP or domain remote host -break! \033[0m"
+    exit 1
 fi
 
 rm -f pki_0.1.* && rm -f ovpn_0.1-1_* && rm -f client_0.1-1_*

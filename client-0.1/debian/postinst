@@ -34,14 +34,14 @@ case "$1" in
                 if [ ! -z $LOGIN ]; then
                     chown -R $LOGIN:$LOGIN ${PATHEASYRSAUSR}
                 else
-                    echo "WARNING: user login not specified, failed to change owner and group for ${PATHEASYRSAUSR}, there may be access problems!"
+                    echo -e "\033[33m WARNING: user login not specified, failed to change owner and group for ${PATHEASYRSAUSR}, there may be access problems! \033[0m"
                 fi
             else
-                echo "Error: not exist folder ${PATHEASYRSADEF}, break install!"
+                echo -e "\033[31m Error: not exist folder ${PATHEASYRSADEF}, break install! \033[0m"
                 exit 1
             fi
         else
-            echo "Error: not exist folder ${PATHEASYRSAUSR}, break install!"
+            echo -e "\033[31m Error: not exist folder ${PATHEASYRSAUSR}, break install! \033[0m"
             exit 1
         fi
 
@@ -51,11 +51,11 @@ case "$1" in
             if [ ! -z $EMAIL ]; then
                 sed -i "s|EXPHOSTNAME|$EMAIL|g" $PATHEASYRSAVARS
             else
-                echo "Error: not specified email - break!"
+                echo -e "\033[31m Error: not specified email - break! \033[0m"
                 exit 1
             fi
         else
-            echo "Error: config template not exist - break!"
+            echo -e "\033[31m Error: config template not exist - break! \033[0m"
             exit 1
         fi
 
@@ -64,14 +64,14 @@ case "$1" in
         # init PKI
         ./easyrsa init-pki
         # create key Diffi-Hellman
-        ./easyrsa gen-dh
+        # ./easyrsa gen-dh
 
         # add exec mode scripts
         chmod +x ${PATHUSRSCRIPTS}/client_gen_req.sh && chmod +x ${PATHUSRSCRIPTS}/client_gen_ovpn.sh
 
-        echo "Installation completed. Start creating a certificate issue request with the command: "
-        echo "$ ${PATHUSRSCRIPTS}/client_gen_req.sh YOUR_USER_LOGIN"
-        echo "And follow further instructions..."
+        echo -e "\033[42m\033[30m +++  Installation completed. Start creating a certificate issue request with the command:  +++ \033[0m"
+        echo -e "\033[33m  $ ${PATHUSRSCRIPTS}/client_gen_req.sh YOUR_USER_LOGIN \033[0m"
+        echo -e "\033[32m And follow further instructions... \033[0m"
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)

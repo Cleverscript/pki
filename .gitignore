@@ -5,6 +5,6 @@
 *_amd64.buildinfo
 *_amd64.changes
 rm_pki_deb.md
-*/debian/client
-*/debian/pki
-*/debian/ovpn
+client-0.1/debian/client/
+pki-0.1/debian/pki/
+ovpn-0.1/debian/ovpn/
