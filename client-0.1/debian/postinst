@@ -47,7 +47,7 @@ case "$1" in
 
         # configure file vars
         if [ -f $PATHEASYRSAVARS ]; then
-            read "Enter your email: " EMAIL
+            read -p "Enter your email: " EMAIL
             if [ ! -z $EMAIL ]; then
                 sed -i "s|EXPHOSTNAME|$EMAIL|g" $PATHEASYRSAVARS
             else
@@ -69,7 +69,8 @@ case "$1" in
         # add exec mode scripts
         chmod +x ${PATHUSRSCRIPTS}/client_gen_req.sh && chmod +x ${PATHUSRSCRIPTS}/client_gen_ovpn.sh
 
-        echo -e "\033[42m\033[30m +++  Installation completed. Start creating a certificate issue request with the command:  +++ \033[0m"
+        echo -e "\033[42m\033[30m +++  Installation success completed! +++ \033[0m"
+        echo -e "\033[33m Start creating a certificate issue request with the command: \033[0m"
         echo -e "\033[33m  $ ${PATHUSRSCRIPTS}/client_gen_req.sh YOUR_USER_LOGIN \033[0m"
         echo -e "\033[32m And follow further instructions... \033[0m"
     ;;
