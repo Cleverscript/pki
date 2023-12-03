@@ -1,5 +1,5 @@
 #!/bin/sh
-# postinst script for pki
+# postinst script for client
 #
 # see: dh_installdeb(1)
 
@@ -21,6 +21,7 @@ PATHEASYRSADEF="/usr/share/easy-rsa"
 PATHEASYRSAUSR="/opt/easy-rsa"
 PATHEASYRSACA="${PATHEASYRSAUSR}/pki/ca.crt"
 PATHEASYRSAVARS="${PATHEASYRSAUSR}/vars"
+PATHUSRSCRIPTS="/urs/bin"
 
 case "$1" in
     configure)
@@ -44,24 +45,33 @@ case "$1" in
             exit 1
         fi
 
-        # create PKI (secret key & CA)
+        # configure file vars
+        if [ -f $PATHEASYRSAVARS ]; then
+            read "Enter your email: " EMAIL
+            if [ ! -z $EMAIL ]; then
+                sed -i "s|EXPHOSTNAME|$EMAIL|g" $PATHEASYRSAVARS
+            else
+                echo "Error: not specified email - break!"
+                exit 1
+            fi
+        else
+            echo "Error: config template not exist - break!"
+            exit 1
+        fi
+
+        # create PKI
         cd $PATHEASYRSAUSR
         # init PKI
         ./easyrsa init-pki
-        # create root certificate
-        ./easyrsa build-ca
         # create key Diffi-Hellman
         ./easyrsa gen-dh
 
-        if [ -f $PATHEASYRSACA ]; then
-            echo "Success create CA!"
-            cat $PATHEASYRSACA
-            cat ${PATHEASYRSAVARS} | grep "# email.)" -A7
-            echo "---"
-        else
-            echo "Error: fail create CA!"
-            exit 1
-        fi
+        # add exec mode scripts
+        chmod +x ${PATHUSRSCRIPTS}/client_gen_req.sh && chmod +x ${PATHUSRSCRIPTS}/client_gen_ovpn.sh
+
+        echo "Installation completed. Start creating a certificate issue request with the command: "
+        echo "$ ${PATHUSRSCRIPTS}/client_gen_req.sh YOUR_USER_LOGIN"
+        echo "And follow further instructions..."
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)

@@ -1,0 +1,10 @@
+Package: client
+Version: 0.1-1
+Architecture: all
+Maintainer: Dokukin Vyacheslav Olegovich <toorrp4@gmail.com>
+Installed-Size: 31
+Depends: easy-rsa, simple-openvpn-client
+Section: unknown
+Priority: optional
+Homepage: <insert the upstream URL, if relevant>
+Description: A package for generating requests to the PKI server to issue certificates, and generating configuration files for the OpenVPN client

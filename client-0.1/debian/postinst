@@ -30,7 +30,7 @@ case "$1" in
         if [ -d $PATHEASYRSAUSR ]; then
             if [ -d $PATHEASYRSADEF ]; then
                 ln -s /usr/share/easy-rsa/* ${PATHEASYRSAUSR}
-                read "Enter your user login: " LOGIN
+                read -p "Enter your user login: " LOGIN
                 if [ ! -z $LOGIN ]; then
                     chown -R $LOGIN:$LOGIN ${PATHEASYRSAUSR}
                 else

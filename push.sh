@@ -26,4 +26,4 @@ cd ../../
 scp pki_0.1-1_all.deb ovpn_0.1-1_all.deb ${LOGIN}@${HOST}:/home/${LOGIN}
 
 # connet to remote server
-ssh ${LOGIN}@${HOST} -t "sudo apt remove pki ovpn easy-rsa iptables-persistent net-tools; sudo apt install ./pki_0.1-1_all.deb ./ovpn_0.1-1_all.deb; exit"
+ssh ${LOGIN}@${HOST} -t "sudo apt remove pki ovpn easy-rsa iptables-persistent net-tools; sudo apt autoremove; sudo apt install ./pki_0.1-1_all.deb ./ovpn_0.1-1_all.deb; exit"
