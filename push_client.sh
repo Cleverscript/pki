@@ -25,18 +25,14 @@ if [ -z $HOST ]; then
 fi
 
 # remove .deb package
-rm -f pki_0.1.* && rm -f ovpn_0.1-1_* && rm -f client_0.1-1_*
+rm -f client_0.1-1_*
 
-# generate .deb packets
-cd pki-0.1/debian && debuild -b
-cd ../../
-cd ovpn-0.1/debian && debuild -b
-cd ../../
+# debuild .deb package
 cd client-0.1/debian && debuild -b
 cd ../../
 
 # push new deb packets to remote server
-scp pki_0.1-1_all.deb ovpn_0.1-1_all.deb ${LOGIN}@${HOST}:/home/${LOGIN}
+scp client_0.1-1_all.deb ${LOGIN}@${HOST}:/home/${LOGIN}
 
 # connet to remote server
-ssh ${LOGIN}@${HOST} -t "sudo apt remove pki ovpn easy-rsa iptables-persistent net-tools; sudo apt autoremove; sudo apt install ./pki_0.1-1_all.deb ./ovpn_0.1-1_all.deb; exit"
+ssh ${LOGIN}@${HOST} -t "sudo apt remove easy-rsa openvpn client; sudo apt autoremove; sudo apt install ./client_0.1-1_all.deb; exit"
