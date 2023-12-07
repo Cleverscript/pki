@@ -19,7 +19,6 @@ set -e
 
 PATHEASYRSADEF="/usr/share/easy-rsa"
 PATHEASYRSAUSR="/opt/easy-rsa"
-PATHEASYRSACA="${PATHEASYRSAUSR}/pki/ca.crt"
 PATHEASYRSAVARS="${PATHEASYRSAUSR}/vars"
 PATHUSRSCRIPTS="/usr/bin"
 
@@ -49,7 +48,7 @@ case "$1" in
         if [ -f $PATHEASYRSAVARS ]; then
             read -p "Enter your email: " EMAIL
             if [ ! -z $EMAIL ]; then
-                sed -i "s|EXPHOSTNAME|$EMAIL|g" $PATHEASYRSAVARS
+                sed -i "s|#EASYRSA_REQ_EMAIL#|$EMAIL|g" $PATHEASYRSAVARS
             else
                 echo -e "\033[31m Error: not specified email - break! \033[0m"
                 exit 1
@@ -70,8 +69,14 @@ case "$1" in
         chmod +x ${PATHUSRSCRIPTS}/client_gen_req.sh && chmod +x ${PATHUSRSCRIPTS}/client_gen_ovpn.sh
 
         echo -e "\033[42m\033[30m +++  Installation success completed! +++ \033[0m"
+        
+        echo -e "\033[33m "
+        cat ${PATHEASYRSAVARS} | grep "# email.)" -A7
+        echo -e " \033[0m"
+
         echo -e "\033[33m Start creating a certificate issue request with the command: \033[0m"
-        echo -e "\033[33m  $ ${PATHUSRSCRIPTS}/client_gen_req.sh YOUR_USER_LOGIN \033[0m"
+        echo -e "\033[33m  $ ${PATHUSRSCRIPTS}/client_gen_req.sh ${LOGIN} \033[0m"
+        
         echo -e "\033[32m And follow further instructions... \033[0m"
     ;;
 
