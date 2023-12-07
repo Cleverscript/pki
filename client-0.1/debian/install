@@ -1,2 +1,2 @@
-*.sh urs/bin
+*.sh usr/bin
 vars opt/easy-rsa
