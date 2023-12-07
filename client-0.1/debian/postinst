@@ -21,7 +21,7 @@ PATHEASYRSADEF="/usr/share/easy-rsa"
 PATHEASYRSAUSR="/opt/easy-rsa"
 PATHEASYRSACA="${PATHEASYRSAUSR}/pki/ca.crt"
 PATHEASYRSAVARS="${PATHEASYRSAUSR}/vars"
-PATHUSRSCRIPTS="/urs/bin"
+PATHUSRSCRIPTS="/usr/bin"
 
 case "$1" in
     configure)

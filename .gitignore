@@ -6,6 +6,6 @@
 *_amd64.changes
 rm_pki_deb.md
 TODO.md
-client-0.1/debian/client/
-pki-0.1/debian/pki/
-ovpn-0.1/debian/ovpn/
+!client-0.1/debian/client/*/
+!pki-0.1/debian/pki/*
+!ovpn-0.1/debian/ovpn/*

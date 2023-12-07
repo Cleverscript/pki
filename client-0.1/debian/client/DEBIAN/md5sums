@@ -1,5 +1,5 @@
 498f5dfff5ca2eac2e9fd60c96d274a2  opt/easy-rsa/vars
-c6689cc289d5e536080e93a559f54678  urs/bin/client_gen_ovpn.sh
-31098c14e665d55f293d0a43352c7976  urs/bin/client_gen_req.sh
+c6689cc289d5e536080e93a559f54678  usr/bin/client_gen_ovpn.sh
+31098c14e665d55f293d0a43352c7976  usr/bin/client_gen_req.sh
 9cc6f14b4826213a0387171586153e10  usr/share/doc/client/changelog.Debian.gz
 224dd8d24c33d911ce5bb8f39ca83376  usr/share/doc/client/copyright
