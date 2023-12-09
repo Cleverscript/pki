@@ -1,2 +1,3 @@
 *.sh usr/bin
 vars opt/easy-rsa
+base.conf etc/openvpn/client

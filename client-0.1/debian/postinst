@@ -21,6 +21,9 @@ PATHEASYRSADEF="/usr/share/easy-rsa"
 PATHEASYRSAUSR="/opt/easy-rsa"
 PATHEASYRSAVARS="${PATHEASYRSAUSR}/vars"
 PATHUSRSCRIPTS="/usr/bin"
+PATHOPENVPNEXE=$(whereis openvpn | awk '{print $2}')
+PATHOPENVPN=/etc/openvpn/server/
+PATHRSATA=${PATHEASYRSAUSR}/pki/ta.key
 
 case "$1" in
     configure)
@@ -75,7 +78,8 @@ case "$1" in
         echo -e " \033[0m"
 
         echo -e "\033[33m Start creating a certificate issue request with the command: \033[0m"
-        echo -e "\033[33m  $ ${PATHUSRSCRIPTS}/client_gen_req.sh ${LOGIN} \033[0m"
+        echo -e "\033[33m $ sudo chown -R $USER:$USER /opt/easy-rsa \033[0m"
+        echo -e "\033[33m $ ${PATHUSRSCRIPTS}/client_gen_req.sh ${LOGIN} \033[0m"
         
         echo -e "\033[32m And follow further instructions... \033[0m"
     ;;
