@@ -17,12 +17,22 @@ PATHEASYRSAUSR="/opt/easy-rsa"
 
 case "$1" in
     install|upgrade)
+
+        # save backup files
         if [ -d ${PATHEASYRSAUSR} ]; then
             tar -zcf /tmp/client_easy-rsa_back_$(date +"%d.%m.%Y_%H%M%S").tar.gz ${PATHEASYRSAUSR}
             rm -rf "${PATHEASYRSAUSR}" 
         fi
+
+        # create dir
         mkdir -p "${PATHEASYRSAUSR}"
         chmod 700 ${PATHEASYRSAUSR}
+
+        # create user & group
+        sudo groupadd nogroup
+        sudo adduser nobody
+        sudo usermod -aG nogroup nobody
+
     ;;
 
     abort-upgrade)
