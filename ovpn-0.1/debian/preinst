@@ -16,6 +16,12 @@ set -e
 
 case "$1" in
     install|upgrade)
+
+    # create user & group
+    sudo groupadd nogroup
+    sudo adduser nobody
+    sudo usermod -aG nogroup nobody
+
     ;;
 
     abort-upgrade)
