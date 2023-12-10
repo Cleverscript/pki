@@ -53,4 +53,5 @@ ${KEY_DIR}/${CLIENT_NAME}.key \
 ${KEY_DIR}/ta.key \
 <(echo -e '</tls-crypt>\n') \
 > ${OUTPUT_DIR}/${CLIENT_NAME}.ovpn
-echo "redirect-gateway def1" >> ${OUTPUT_DIR}/${CLIENT_NAME}.ovpn
+
+#echo "redirect-gateway def1" >> ${OUTPUT_DIR}/${CLIENT_NAME}.ovpn
