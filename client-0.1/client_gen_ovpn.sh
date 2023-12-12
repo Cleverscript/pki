@@ -50,7 +50,7 @@ if [ ! -d $OUTPUT_DIR ]; then
   sudo chmod 700 $OUTPUT_DIR
 fi
 
-sed -i "s|#SERVER_IP_OPENVPN#|$SERVER_IP_OPENVPN|g" $BASE_CONFIG
+sudo sed -i "s|#SERVER_IP_OPENVPN#|$SERVER_IP_OPENVPN|g" ${BASE_CONFIG}
 
 cat ${BASE_CONFIG} \
 <(echo -e '<ca>') \
