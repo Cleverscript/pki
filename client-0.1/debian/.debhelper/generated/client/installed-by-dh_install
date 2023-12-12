@@ -1,3 +1,4 @@
 ./client_gen_ovpn.sh
 ./client_gen_req.sh
 ./vars
+./base.conf

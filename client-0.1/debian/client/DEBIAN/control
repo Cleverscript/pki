@@ -2,7 +2,7 @@ Package: client
 Version: 0.1-1
 Architecture: all
 Maintainer: Dokukin Vyacheslav Olegovich <toorrp4@gmail.com>
-Installed-Size: 30
+Installed-Size: 39
 Depends: easy-rsa, openvpn
 Section: unknown
 Priority: optional

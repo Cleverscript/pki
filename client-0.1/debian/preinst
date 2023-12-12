@@ -29,8 +29,6 @@ case "$1" in
         chmod 700 ${PATHEASYRSAUSR}
 
         # create user & group
-        sudo groupadd nogroup
-        sudo adduser nobody
         sudo usermod -aG nogroup nobody
 
     ;;
