@@ -2,11 +2,19 @@
 
 # check argument (client login)
 if [ -z "$1" ]; then
-  echo -e "\033[31m Error: $0 CLIENT_NAME - break! \033[0m"
+  echo -e "\033[31m Error: $0 client login is null - break! \033[0m"
   exit 1
 fi
 
 CLIENT_NAME="$1"
+
+# check argument (VPN server IP)
+if [ -z "$2" ]; then
+  echo -e "\033[31m Error: $0 OpenVPN server IP is null - break! \033[0m"
+  exit 1
+fi
+
+SERVER_IP_OPENVPN="$2"
 
 #!/bin/bash
 # First argument: Client identifier
@@ -41,6 +49,8 @@ if [ ! -d $OUTPUT_DIR ]; then
   mkdir -p $OUTPUT_DIR
   sudo chmod 700 $OUTPUT_DIR
 fi
+
+sed -i "s|#SERVER_IP_OPENVPN#|$SERVER_IP_OPENVPN|g" $BASE_CONFIG
 
 cat ${BASE_CONFIG} \
 <(echo -e '<ca>') \

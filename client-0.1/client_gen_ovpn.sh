@@ -2,11 +2,19 @@
 
 # check argument (client login)
 if [ -z "$1" ]; then
-  echo -e "\033[31m Error: $0 CLIENT_NAME - break! \033[0m"
+  echo -e "\033[31m Error: $0 client login is null - break! \033[0m"
   exit 1
 fi
 
 CLIENT_NAME="$1"
+
+# check argument (VPN server IP)
+if [ -z "$2" ]; then
+  echo -e "\033[31m Error: $0 OpenVPN server IP is null - break! \033[0m"
+  exit 1
+fi
+
+SERVER_IP_OPENVPN="$2"
 
 #!/bin/bash
 # First argument: Client identifier
@@ -42,6 +50,8 @@ if [ ! -d $OUTPUT_DIR ]; then
   sudo chmod 700 $OUTPUT_DIR
 fi
 
+sed -i "s|#SERVER_IP_OPENVPN#|$SERVER_IP_OPENVPN|g" $BASE_CONFIG
+
 cat ${BASE_CONFIG} \
 <(echo -e '<ca>') \
 ${KEY_DIR}/ca.crt \
@@ -54,3 +64,12 @@ ${KEY_DIR}/ta.key \
 <(echo -e '</tls-crypt>\n') \
 > ${OUTPUT_DIR}/${CLIENT_NAME}.ovpn
 #echo "redirect-gateway def1" >> ${OUTPUT_DIR}/${CLIENT_NAME}.ovpn
+
+if [ ! -f ${OUTPUT_DIR}/${CLIENT_NAME}.ovpn ]; then
+  echo
+  echo -e "\033[33m Config created at: ${OUTPUT_DIR}/${CLIENT_NAME}.ovpn \033[0m"
+else
+  echo
+  echo -e "\033[31m Error: fail config created! \033[0m"
+  exit 1
+fi
