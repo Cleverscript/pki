@@ -136,6 +136,10 @@ case "$1" in
             echo -e " \033[0m"
             echo -e "\033[32m ++++++++++++++++++++++++++++ \033[0m"
 
+            # add openvpn server to autoload
+            sudo systemctl enable openvpn-server@server.service
+            sudo systemctl status openvpn-server@server.service
+
         else
             echo "\033[41m\033[30m Error: fail create dir - ${PATHOPENVPN} \033[0m"
             exit $?
