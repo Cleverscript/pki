@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Dokukin Vyacheslav Olegovich <toorrp4@gmail.com>
 Build-Depends: debhelper-compat (= 13)
 Standards-Version: 4.6.0
-Homepage: <insert the upstream URL, if relevant>
+Homepage: https://github.com/Cleverscript/pki
 #Vcs-Browser: https://salsa.debian.org/debian/client
 #Vcs-Git: https://salsa.debian.org/debian/client.git
 Rules-Requires-Root: no

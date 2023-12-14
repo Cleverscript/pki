@@ -79,10 +79,9 @@ case "$1" in
 
         echo -e "\033[33m Start creating a certificate issue request with the command: \033[0m"
         echo 
-        echo -e "\033[33m $ sudo chown -R ${LOGIN}:${LOGIN} /opt/easy-rsa \033[0m"
-        echo -e "\033[33m $ sudo chmod -R 700 /opt/easy-rsa \033[0m"
-        echo 
-        echo -e "\033[33m $ ${PATHUSRSCRIPTS}/client_gen_req.sh ${LOGIN} \033[0m"
+        echo -e "\033[33m 1. $ sudo chown -R ${LOGIN}:${LOGIN} /opt/easy-rsa \033[0m"
+        echo -e "\033[33m 2. $ sudo chmod -R 700 /opt/easy-rsa \033[0m"
+        echo -e "\033[33m 3. $ ${PATHUSRSCRIPTS}/client_gen_req.sh ${LOGIN} \033[0m"
         
         echo -e "\033[32m And follow further instructions... \033[0m"
     ;;

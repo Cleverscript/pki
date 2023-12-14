@@ -10,5 +10,6 @@ fi
 
 LOGIN="$1"
 
-${PATHEASYRSAUSR}/easyrsa gen-req ${LOGIN} nopass
+cd ${PATHEASYRSAUSR}
+./easyrsa gen-req ${LOGIN} nopass
 
