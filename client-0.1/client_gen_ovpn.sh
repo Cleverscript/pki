@@ -22,6 +22,11 @@ KEY_DIR=/opt/easy-rsa/pki/private
 OUTPUT_DIR=~/ovpn
 BASE_CONFIG=/etc/openvpn/client/base.conf
 
+# create a custom config storage directory
+if [ ! -d $OUTPUT_DIR ]; then
+  mkdir $OUTPUT_DIR
+fi
+
 # change user and permission
 sudo chown -R $USER:$USER "/opt/easy-rsa"
 
