@@ -68,7 +68,7 @@ case "$1" in
         # create key Diffi-Hellman
         # ./easyrsa gen-dh
 
-        # craete GPG keys
+        # create GPG keys
         gpg --gen-key
 
         # add exec mode scripts

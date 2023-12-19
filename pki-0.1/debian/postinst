@@ -53,6 +53,13 @@ case "$1" in
         # create key Diffi-Hellman
         # ./easyrsa gen-dh
 
+        # create GPG keys
+        gpg --gen-key
+
+        echo -e "\033[33m "
+        gpg --list-key
+        echo -e " \033[0m"
+
         if [ -f $PATHEASYRSACA ]; then
             echo -e "\033[42m\033[30m +++ Success create CA! +++ \033[0m"
             echo -e "\033[33m "
