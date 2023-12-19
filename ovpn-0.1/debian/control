@@ -11,5 +11,5 @@ Rules-Requires-Root: no
 
 Package: ovpn
 Architecture: all
-Depends: prometheus-node-exporter, iptables-persistent, net-tools, openvpn, easy-rsa, pki
+Depends: gnupg, prometheus-node-exporter, iptables-persistent, net-tools, openvpn, easy-rsa, pki
 Description: Install and configure OpenVPN server

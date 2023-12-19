@@ -11,5 +11,5 @@ Rules-Requires-Root: no
 
 Package: client
 Architecture: all
-Depends: easy-rsa, openvpn, net-tools
+Depends: easy-rsa, openvpn, net-tools, gnupg
 Description: A package for generating requests to the PKI server to issue certificates, and generating configuration files for the OpenVPN client
