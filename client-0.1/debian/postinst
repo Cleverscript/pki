@@ -68,11 +68,18 @@ case "$1" in
         # create key Diffi-Hellman
         # ./easyrsa gen-dh
 
+        # craete GPG keys
+        gpg --gen-key
+
         # add exec mode scripts
         chmod +x ${PATHUSRSCRIPTS}/client_gen_req.sh && chmod +x ${PATHUSRSCRIPTS}/client_gen_ovpn.sh
 
         echo -e "\033[42m\033[30m +++  Installation success completed! +++ \033[0m"
         
+        echo -e "\033[33m "
+        gpg --list-key
+        echo -e " \033[0m"
+
         echo -e "\033[33m "
         cat ${PATHEASYRSAVARS} | grep "# email.)" -A7
         echo -e " \033[0m"
