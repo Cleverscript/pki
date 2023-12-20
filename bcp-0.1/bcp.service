@@ -1,0 +1,9 @@
+[Unit]
+Description=Backup service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/bcp.sh
+
+[Install]
+WantedBy=multi-user.target

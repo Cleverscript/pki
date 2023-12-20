@@ -1,0 +1,5 @@
+bcp (0.1-1) UNRELEASED; urgency=medium
+
+  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+
+ -- Dokukin Vyacheslav Olegovich <toorrp4@gmail.com>  Wed, 20 Dec 2023 23:05:35 +0300
