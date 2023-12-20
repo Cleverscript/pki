@@ -2,7 +2,7 @@
 Description=Runs backup bcp.service
 
 [Timer]
-OnUnitActiveSec=24h
+OnUnitActiveSec=1m
 Unit=bcp.service
 
 [Install]

@@ -20,6 +20,28 @@ set -e
 
 case "$1" in
     configure)
+        # install s3cmd from pip
+        sudo pip install s3cmd
+        s3cmd --configure
+
+        if [ -f ~/.s3cfg ]; then
+
+            echo -e "\033[42m\033[30m +++  Configure s3cmd success completed! +++ \033[0m"
+            
+            echo -e "\033[33m "
+            cat ~/.s3cfg
+            echo -e " \033[0m"
+
+            # enable service
+            sudo systemctl enable bcp.timer
+
+            # start service
+            sudo systemctl start bcp.timer
+
+            # status service
+            sudo systemctl status bcp.timer
+            
+        fi
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
