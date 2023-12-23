@@ -11,5 +11,5 @@ Rules-Requires-Root: no
 
 Package: bcp
 Architecture: all
-Depends: python-pip
+Depends: s3cmd
 Description: This package allows you to organize backup of critical infrastructure files using the s3cmd package and cloud storage (for example AWS or SELECTEL)

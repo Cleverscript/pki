@@ -3,8 +3,8 @@ Version: 0.1-1
 Architecture: all
 Maintainer: Dokukin Vyacheslav Olegovich <toorrp4@gmail.com>
 Installed-Size: 39
-Depends: easy-rsa, openvpn
+Depends: easy-rsa, openvpn, net-tools, gnupg
 Section: unknown
 Priority: optional
-Homepage: <insert the upstream URL, if relevant>
+Homepage: https://github.com/Cleverscript/pki
 Description: A package for generating requests to the PKI server to issue certificates, and generating configuration files for the OpenVPN client
