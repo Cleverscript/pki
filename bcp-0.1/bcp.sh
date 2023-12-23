@@ -40,7 +40,7 @@ do
 
     # GPG encript file array
     if [ -f $BCPGPGCONF ]; then
-        GPGKEY=$(cat ${$BCPGPGCONF})
+        GPGKEY=$(cat ${BCPGPGCONF})
         if [ ! -z $GPGKEY ]; then
             gpg --encrypt --sign --armor -r ${GPGKEY} ${BCPNAME}.tar.gz
             rm -f ${BCPNAME}.tar.gz && echo "[${BCPDATETIME}] Remove ${BCPNAME}.tar.gz" >> ${BCPLOG}
