@@ -1,6 +1,6 @@
 ./bcp.sh
 ./bcp.conf
-./bcp3cfg.conf
 ./bcpgpg.conf
+./bcps3cfg.conf
 ./bcp.service
 ./bcp.timer
