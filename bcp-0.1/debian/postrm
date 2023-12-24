@@ -21,6 +21,12 @@ set -e
 
 case "$1" in
     purge|remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
+
+        rm -f /etc/bcp.conf
+        rm -f /etc/bcpgpg.conf
+        rm -f /etc/bcps3cfg.conf
+        rm -f /root/.s3cfg
+
     ;;
 
     *)
