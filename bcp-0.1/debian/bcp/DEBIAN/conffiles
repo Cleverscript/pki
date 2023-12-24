@@ -1,5 +1,3 @@
 /etc/bcp.conf
-/etc/bcpgpg.conf
-/etc/bcps3cfg.conf
 /etc/systemd/system/bcp.service
 /etc/systemd/system/bcp.timer

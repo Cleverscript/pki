@@ -27,6 +27,8 @@ case "$1" in
         rm -f /etc/bcps3cfg.conf
         rm -f /root/.s3cfg
 
+        # start service
+        #invoke-rc.d bcp.timer stop >/dev/null || true
         rm -f /etc/systemd/system/bcp.service
         rm -f /etc/systemd/system/bcp.timer
 

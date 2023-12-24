@@ -24,20 +24,23 @@ BCPS3CFG=/etc/bcps3cfg.conf
 case "$1" in
     configure)
 
-        #import GPG key (write conf)Y
+        #import GPG key (write conf)
+        touch $BCPGPGCONF
         if [ -f $BCPGPGCONF ]; then
             echo "\033[42m\033[30m GPG keys in the system: \033[0m"
             echo "\033[33m "
             gpg --list-key
             echo " \033[0m"
 
-            read -p "Enter your GPG key (email) which can decrypt the backup archive: " email
-            if [ ! -z "$email" ]; then
-                echo "$email" > $BCPGPGCONF
-            else
-                echo "\033[31m Error: The recipient's decryption key is not specified, specify it later in the file ${$BCPGPGCONF}, otherwise it will not work! \033[0m"
-                exit 1
-            fi
+            while :
+            do
+                read -p "Enter your GPG key (email) which can decrypt the backup archive: " email
+                if [ ! -z "$email" ]; then
+                    echo "$email" > $BCPGPGCONF
+                    break
+                fi
+            done
+
         else
             echo "\033[31m Error: config file ${BCPGPGCONF} not exist, create a file! \033[0m"
             exit 1
@@ -47,28 +50,40 @@ case "$1" in
         s3cmd --configure
 
         # save container name
-        read -p "Enter cloud storeage container name: " container
-        if [ ! -z "$container" ]; then
-            echo "$container" > $BCPS3CFG
+        touch $BCPS3CFG
+        if [ -f $BCPS3CFG ]; then
+
+            while :
+            do
+                read -p "Enter cloud storeage container name: " container
+                if [ ! -z "$container" ]; then
+                    echo "$container" > $BCPS3CFG
+                    break
+                fi
+            done
+            
         else
-            echo "\033[31m Error: The name of the container in the repository is not specified! \033[0m"
+            echo "\033[31m Error: config file ${BCPS3CFG} not exist, create a file! \033[0m"
             exit 1
         fi
 
+        # View result
         if [ -f $S3CFGCONF ]; then
 
             echo "\033[42m\033[30m +++  Configure s3cmd success completed! +++ \033[0m"
             
+            #echo "\033[33m "
+            #cat $S3CFGCONF
+            #echo " \033[0m"
+
+            echo "\033[33m Activate the backup service by running the following commands: \033[0m"
+
             echo "\033[33m "
-            cat $S3CFGCONF
+            echo "$ sudo systemctl enable bcp.timer"
+            echo "$ sudo systemctl start bcp.timer"
+            echo "$ sudo systemctl status bcp.timer"
             echo " \033[0m"
 
-            # start service
-            invoke-rc.d bcp.timer start >/dev/null || true
-
-            # status service
-            invoke-rc.d bcp.timer status | grep 'Active'
-            
         fi
     ;;
 
