@@ -2,7 +2,7 @@ Package: bcp
 Version: 0.1-1
 Architecture: all
 Maintainer: Dokukin Vyacheslav Olegovich <toorrp4@gmail.com>
-Installed-Size: 26
+Installed-Size: 27
 Depends: s3cmd
 Section: unknown
 Priority: optional
