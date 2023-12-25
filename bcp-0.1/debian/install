@@ -1,4 +1,0 @@
-*.sh usr/bin
-bcp.conf etc
-bcp.service etc/systemd/system
-bcp.timer etc/systemd/system
