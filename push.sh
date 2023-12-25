@@ -38,7 +38,7 @@ cd client-0.1/debian && debuild -b
 cd ../../
 
 # push new deb packets to remote server
-scp pki_0.1-1_all.deb ovpn_0.1-1_all.deb bcp_0.1-1_all.deb ${LOGIN}@${HOST}:/home/${LOGIN}
+scp pki_0.1-1_all.deb ovpn_0.1-1_all.deb ${LOGIN}@${HOST}:/home/${LOGIN}
 
 # connet to remote server
 ssh ${LOGIN}@${HOST} -t "sudo apt update && sudo apt full-upgrade; sudo apt remove pki ovpn bcp easy-rsa iptables-persistent net-tools prometheus-node-exporter gnupg s3cmd; sudo apt autoremove; sudo apt install ./pki_0.1-1_all.deb ./ovpn_0.1-1_all.deb; exit"
