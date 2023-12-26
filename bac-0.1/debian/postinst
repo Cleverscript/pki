@@ -84,6 +84,8 @@ case "$1" in
             echo "\033[33m "
             echo "$ sudo systemctl enable bac.timer"
             echo "$ sudo systemctl start bac.timer"
+            echo "$ sudo systemctl enable bac.service"
+            echo "$ sudo systemctl start bac.service"
             echo "$ sudo systemctl status bac.timer"
             echo " \033[0m"
 

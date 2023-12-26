@@ -3,7 +3,7 @@ Description=Backup service
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/bac.sh #GPGKEY# #CONTAINER#
+ExecStart=/usr/bin/bac.sh #GPGKEY# #CONTAINER# #USER#
 User=#USER#
 Group=#GROUP#
 
