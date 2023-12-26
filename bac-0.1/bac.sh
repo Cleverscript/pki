@@ -49,8 +49,7 @@ do
     fi
     tar -zcf ${BACNAME}.tar.gz /tmp/${BACNAME} >/dev/null
     sudo bash -c "echo '[${BACDATETIME}] Success: create backup file ${BACNAME}.tar.gz!' >> '${BACLOG}';"
-    tar -tf ${BACNAME}.tar.gz >> ${BACLOG}
-
+    sudo bash -c "'tar -tf ${BACNAME}.tar.gz' >> '${BACLOG}';"
 done < $BACCNF
 
 # GPG encript file array
