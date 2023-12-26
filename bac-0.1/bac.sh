@@ -16,7 +16,7 @@ BACLOG=/var/log/bac.log
 
 # check config
 if [ ! -f $BACCNF ]; then
-    echo "[${BACDATETIME}] Error: config file ${BACCNF} is not exist!" >> ${BACLOG}
+    sudo bash -c "echo '[${BACDATETIME}] Error: config file ${BACCNF} is not exist!' >> '${BACLOG}';"
     exit 1
 fi
 
@@ -30,12 +30,12 @@ fi
 
 # create log file
 if [ ! -f ${BACLOG} ]; then
-    touch ${BACLOG}
+    sudo touch ${BACLOG}
 fi
 
 # check exist backup dir
 if [ ! -d /tmp/${BACNAME} ]; then
-    echo "[${BACDATETIME}] Error: backup dir /tmp/${BACNAME} is not exist!" >> ${BACLOG}
+    sudo bash -c "echo '[${BACDATETIME}] Error: backup dir /tmp/${BACNAME} is not exist!' >> '${BACLOG}';"
     exit 1
 fi
 
@@ -48,7 +48,7 @@ do
         cp -r "$line" /tmp/${BACNAME}/ >/dev/null
     fi
     tar -zcf ${BACNAME}.tar.gz /tmp/${BACNAME} >/dev/null
-    echo "[${BACDATETIME}] Success: create backup file ${BACNAME}.tar.gz!" >> ${BACLOG}
+    sudo bash -c "echo '[${BACDATETIME}] Success: create backup file ${BACNAME}.tar.gz!' >> '${BACLOG}';"
     tar -tf ${BACNAME}.tar.gz >> ${BACLOG}
 
 done < $BACCNF
@@ -59,15 +59,15 @@ if [ ! -z $BACGPG ]; then
     gpg --encrypt --sign --armor -r ${BACGPG} /tmp/${BACNAME}.tar.gz
 
     if [ -f /tmp/${BACNAME}.tar.gz.asc ]; then
-        rm -f /tmp/${BACNAME}.tar.gz && echo "[${BACDATETIME}] Remove /tmp/${BACNAME}.tar.gz" >> ${BACLOG}
-        echo "[${BACDATETIME}] Success GPG encrypt file array, new file:" >> ${BACLOG}
+        rm -f /tmp/${BACNAME}.tar.gz && sudo bash -c "echo '[${BACDATETIME}] Remove /tmp/${BACNAME}.tar.gz' >> '${BACLOG}';"
+        sudo bash -c "echo '[${BACDATETIME}] Success GPG encrypt file array, new file:' >> '${BACLOG}';"
         ls -la /tmp/${BACNAME}.tar.gz.asc >> ${BACLOG}
     else
-        echo "[${BACDATETIME}] Error GPG encrypt file array fail" >> ${BACLOG}
+        sudo bash -c "echo '[${BACDATETIME}] Error GPG encrypt file array fail' >> '${BACLOG}';"
         exit 1
     fi
 else
-    echo "[${BACDATETIME}] Error: The recipient's decryption key is not specified, specify it later in the file /etc/systemd/system/bac.service, otherwise it will not work!" >> ${BACLOG}
+    sudo bash -c "echo '[${BACDATETIME}] Error: The recipient's decryption key is not specified, specify it later in the file /etc/systemd/system/bac.service, otherwise it will not work!' >> '${BACLOG}';"
     exit 1
 fi
 
@@ -77,16 +77,16 @@ if [ ! -z ${BACCONTAINER} ]; then
     if [ -f /tmp/${BACNAME}.tar.gz.asc ]; then		
             s3cmd put /tmp/${BACNAME}.tar.gz.asc s3://${BACCONTAINER}
     else
-        echo "[${BACDATETIME}] Error: file /tmp/${BACNAME}.tar.gz.asc is not exist!" >> ${BACLOG}
+        sudo bash -c "echo '[${BACDATETIME}] Error: file /tmp/${BACNAME}.tar.gz.asc is not exist!' >> '${BACLOG}';"
         exit 1
     fi
 else
-    echo "[${BACDATETIME}] Error: container name is not defined, exited!" >> ${BACLOG}
+    sudo bash -c "echo '[${BACDATETIME}] Error: container name is not defined, exited!' >> '${BACLOG}';"
     exit 1
 fi
 
 
-echo "- - - - -" >> ${BACLOG}
+sudo bash -c "echo '- - - - -' >> '${BACLOG}';"
 
 # clear tmp files
 rm -rf /tmp/${BACNAME}*
