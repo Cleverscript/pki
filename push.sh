@@ -19,6 +19,7 @@ if [ -z $LOGIN ]; then
     echo -e "\033[31m Error - empty login remote host -break! \033[0m"
     exit 1
 fi
+
 if [ -z $HOST ]; then
     echo -e "\033[31m Error - empty IP or domain remote host -break! \033[0m"
     exit 1

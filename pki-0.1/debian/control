@@ -11,6 +11,6 @@ Rules-Requires-Root: no
 
 Package: pki
 Architecture: all
-Depends: easy-rsa, gnupg
+Depends: easy-rsa, gpg
 Description: Installing PKI using easy-rsa
 
