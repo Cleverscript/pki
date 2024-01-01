@@ -145,24 +145,25 @@ case "$1" in
             echo "\033[33m "
             sudo ls -la ${PATHOPENVPN}
             echo " \033[0m"
-            echo "\033[32m ++++++++++++++++++++++++++++++ \033[0m"
 
             echo "\033[42m\033[30m +++ Server ovpn routing table +++ \033[0m"
             echo "\033[33m "
             sudo route
             echo " \033[0m"
-            echo "\033[32m +++++++++++++++++++++++++++++++++ \033[0m"
 
             echo "\033[42m\033[30m +++ Server ovpn iptables +++ \033[0m"
             echo "\033[33m "
             sudo iptables -S
             echo " \033[0m"
-            echo "\033[32m ++++++++++++++++++++++++++++ \033[0m"
 
-            # add openvpn server to autoload
-            # sudo systemctl enable openvpn-server@server.service
-            # sudo systemctl status openvpn-server@server.service
-            echo "\033[42m\033[30m +++ Server ovpn status +++ \033[0m"
+            echo "\033[42m\033[30m +++ To start the OpenVPN server, run the commands: +++ \033[0m"
+            echo "\033[33m "
+            echo "$ sudo systemctl enable openvpn-server@server.service"
+            echo "$ sudo systemctl start openvpn-server@server.service"
+            echo "$ sudo systemctl status openvpn-server@server.service"
+            echo " \033[0m"
+
+            echo "\033[42m\033[30m +++ Server prometheus-node-exporter status +++ \033[0m"
             echo "\033[33m "
             sudo invoke-rc.d prometheus-node-exporter status | grep 'Active'
             echo " \033[0m"
