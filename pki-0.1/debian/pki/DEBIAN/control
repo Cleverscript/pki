@@ -3,7 +3,7 @@ Version: 0.1-1
 Architecture: all
 Maintainer: Dokukin Vyacheslav Olegovich <toorrp4@gmail.com>
 Installed-Size: 26
-Depends: easy-rsa, gnupg
+Depends: easy-rsa, gpg
 Section: unknown
 Priority: optional
 Homepage: https://github.com/Cleverscript/pki

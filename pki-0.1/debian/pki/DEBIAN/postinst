@@ -33,14 +33,14 @@ case "$1" in
                 if [ ! -z $LOGIN ]; then
                     chown -R $LOGIN:$LOGIN ${PATHEASYRSAUSR}
                 else
-                    echo -e "\033[33m WARNING: user login not specified, failed to change owner and group for ${PATHEASYRSAUSR}, there may be access problems! \033[0m"
+                    echo "\033[33m WARNING: user login not specified, failed to change owner and group for ${PATHEASYRSAUSR}, there may be access problems! \033[0m"
                 fi
             else
-                echo -e "\033[31m Error: not exist folder ${PATHEASYRSADEF}, break install! \033[0m"
+                echo "\033[31m Error: not exist folder ${PATHEASYRSADEF}, break install! \033[0m"
                 exit 1
             fi
         else
-            echo -e "\033[31m Error: not exist folder ${PATHEASYRSAUSR}, break install! \033[0m"
+            echo "\033[31m Error: not exist folder ${PATHEASYRSAUSR}, break install! \033[0m"
             exit 1
         fi
 
@@ -50,25 +50,16 @@ case "$1" in
         ./easyrsa init-pki
         # create root certificate
         ./easyrsa build-ca
-        # create key Diffi-Hellman
-        # ./easyrsa gen-dh
-
-        # create GPG keys
-        gpg --gen-key
-
-        echo -e "\033[33m "
-        gpg --list-key
-        echo -e " \033[0m"
 
         if [ -f $PATHEASYRSACA ]; then
-            echo -e "\033[42m\033[30m +++ Success create CA! +++ \033[0m"
-            echo -e "\033[33m "
+            echo "\033[42m\033[30m +++ Success create CA! +++ \033[0m"
+            echo "\033[33m "
             cat $PATHEASYRSACA
             cat ${PATHEASYRSAVARS} | grep "# email.)" -A7
-            echo -e " \033[0m"
+            echo " \033[0m"
             echo "\033[42m\033[30m +++++++++++++++++++++++++++++++++++++++++++++ \033[0m"
         else
-            echo -e "\033[41m\033[30m Error: fail create CA! \033[0m"
+            echo "\033[41m\033[30m Error: fail create CA! \033[0m"
             exit 1
         fi
     ;;
