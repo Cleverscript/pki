@@ -70,11 +70,11 @@ ${KEY_DIR}/ta.key \
 > ${OUTPUT_DIR}/${CLIENT_NAME}.ovpn
 #echo "redirect-gateway def1" >> ${OUTPUT_DIR}/${CLIENT_NAME}.ovpn
 
-if [ ! -f ${OUTPUT_DIR}/${CLIENT_NAME}.ovpn ]; then
+if [ -f ${OUTPUT_DIR}/${CLIENT_NAME}.ovpn ]; then
   echo
-  echo -e "\033[33m Config created at: ${OUTPUT_DIR}/${CLIENT_NAME}.ovpn \033[0m"
+  echo "\033[33m Config created at: ${OUTPUT_DIR}/${CLIENT_NAME}.ovpn \033[0m"
 else
   echo
-  echo -e "\033[31m Error: fail config created! \033[0m"
+  echo "\033[31m Error: fail config created! \033[0m"
   exit 1
 fi
