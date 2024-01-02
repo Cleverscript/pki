@@ -36,14 +36,14 @@ case "$1" in
                 if [ ! -z $LOGIN ]; then
                     chown -R $LOGIN:$LOGIN ${PATHEASYRSAUSR}
                 else
-                    echo -e "\033[33m WARNING: user login not specified, failed to change owner and group for ${PATHEASYRSAUSR}, there may be access problems! \033[0m"
+                    echo "\033[33m WARNING: user login not specified, failed to change owner and group for ${PATHEASYRSAUSR}, there may be access problems! \033[0m"
                 fi
             else
-                echo -e "\033[31m Error: not exist folder ${PATHEASYRSADEF}, break install! \033[0m"
+                echo "\033[31m Error: not exist folder ${PATHEASYRSADEF}, break install! \033[0m"
                 exit 1
             fi
         else
-            echo -e "\033[31m Error: not exist folder ${PATHEASYRSAUSR}, break install! \033[0m"
+            echo "\033[31m Error: not exist folder ${PATHEASYRSAUSR}, break install! \033[0m"
             exit 1
         fi
 
@@ -53,11 +53,11 @@ case "$1" in
             if [ ! -z $EMAIL ]; then
                 sed -i "s|#EASYRSA_REQ_EMAIL#|$EMAIL|g" $PATHEASYRSAVARS
             else
-                echo -e "\033[31m Error: not specified email - break! \033[0m"
+                echo "\033[31m Error: not specified email - break! \033[0m"
                 exit 1
             fi
         else
-            echo -e "\033[31m Error: config template not exist - break! \033[0m"
+            echo "\033[31m Error: config template not exist - break! \033[0m"
             exit 1
         fi
 
@@ -69,23 +69,19 @@ case "$1" in
         # add exec mode scripts
         chmod +x ${PATHUSRSCRIPTS}/client_gen_req.sh && chmod +x ${PATHUSRSCRIPTS}/client_gen_ovpn.sh
 
-        echo -e "\033[42m\033[30m +++  Installation success completed! +++ \033[0m"
+        echo "\033[42m\033[30m +++  Installation success completed! +++ \033[0m"
         
-        echo -e "\033[33m "
-        gpg --list-key
-        echo -e " \033[0m"
-
-        echo -e "\033[33m "
+        echo "\033[33m "
         cat ${PATHEASYRSAVARS} | grep "# email.)" -A7
-        echo -e " \033[0m"
+        echo " \033[0m"
 
-        echo -e "\033[33m Start creating a certificate issue request with the command: \033[0m"
+        echo "\033[33m Start creating a certificate issue request with the command: \033[0m"
         echo 
-        echo -e "\033[33m 1. $ sudo chown -R ${LOGIN}:${LOGIN} /opt/easy-rsa \033[0m"
-        echo -e "\033[33m 2. $ sudo chmod -R 700 /opt/easy-rsa \033[0m"
-        echo -e "\033[33m 3. $ ${PATHUSRSCRIPTS}/client_gen_req.sh ${LOGIN} \033[0m"
+        echo "\033[33m 1. $ sudo chown -R ${LOGIN}:${LOGIN} /opt/easy-rsa \033[0m"
+        echo "\033[33m 2. $ sudo chmod -R 700 /opt/easy-rsa \033[0m"
+        echo "\033[33m 3. $ ${PATHUSRSCRIPTS}/client_gen_req.sh ${LOGIN} \033[0m"
         
-        echo -e "\033[32m And follow further instructions... \033[0m"
+        echo "\033[32m And follow further instructions... \033[0m"
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
