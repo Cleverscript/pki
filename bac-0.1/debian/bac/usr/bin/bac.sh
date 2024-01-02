@@ -7,67 +7,92 @@
 # Category   :  Desktop
 ##########################################################################
 
-BACDATETIME=$(date +"%d.%m.%Y_%H-%M-%S")
+BACDATETIME=$(date +"%d.%m.%Y %H:%M:%S")
 BACCNF=/etc/bac.conf
 BACGPG="$1"
 BACCONTAINER="$2"
 BACNAME=bac_$(date "+%d%m%Y")
 BACLOG=/var/log/bac.log
 
-# check config
+# Check config
 if [ ! -f $BACCNF ]; then
-    echo "[${BACDATETIME}] Error: config file ${BACCNF} is not exist!" >> ${BACLOG}
+    sudo bash -c "echo '[${BACDATETIME}] Error: config file \"${BACCNF}\" is not exist!' >> '${BACLOG}';"
     exit 1
 fi
 
+# Check GPG key
+if [ -z $BACGPG ]; then
+    sudo bash -c "echo '[${BACDATETIME}] Error: PGP key is null, exited!' >> '${BACLOG}';"
+    exit 1
+fi
 
-# create backup dir
+# Check SELECTEL storege container name
+if [ -z $BACCONTAINER ]; then
+    sudo bash -c "echo '[${BACDATETIME}] Error: SELECTEL storege container name is null, exited!' >> '${BACLOG}';"
+    exit 1
+fi
+
+# Create backup dir
 if [ ! -d /tmp/${BACNAME} ]; then
     mkdir /tmp/${BACNAME}
 else
     rm -rf /tmp/${BACNAME}/*
 fi
 
-# create log file
+# Create log file
 if [ ! -f ${BACLOG} ]; then
-    touch ${BACLOG}
+    sudo touch ${BACLOG}
 fi
 
-# check exist backup dir
+# Check exist backup dir
 if [ ! -d /tmp/${BACNAME} ]; then
-    echo "[${BACDATETIME}] Error: backup dir /tmp/${BACNAME} is not exist!" >> ${BACLOG}
+    sudo bash -c "echo '[${BACDATETIME}] Error: backup dir \"/tmp/${BACNAME}\" is not exist!' >> '${BACLOG}';"
     exit 1
 fi
 
 cd /tmp
 
+# Packing into array
 while read line
 do
-    # Packing into an array
     if [ ! -z "$line" ]; then
-        cp -r "$line" /tmp/${BACNAME}/ >/dev/null
+        sudo bash -c "'cp -r $line /tmp/${BACNAME}/' > '/dev/null';"
     fi
-    tar -zcf ${BACNAME}.tar.gz /tmp/${BACNAME} >/dev/null
-    echo "[${BACDATETIME}] Success: create backup file ${BACNAME}.tar.gz!" >> ${BACLOG}
-    tar -tf ${BACNAME}.tar.gz >> ${BACLOG}
-
+    sudo bash -c "tar -zcf ${BACNAME}.tar.gz /tmp/${BACNAME} > '/dev/null';"
+    if [ ! -f /tmp/${BACNAME}.tar.gz ]; then
+        sudo bash -c "echo '[${BACDATETIME}] Error: create backup file \"${BACNAME}.tar.gz\", exited!' >> '${BACLOG}';"
+    fi
 done < $BACCNF
+
+# Check exist backup file
+if [ -f /tmp/${BACNAME}.tar.gz ]; then
+    sudo bash -c "echo '[${BACDATETIME}] Success: create backup file \"/tmp/${BACNAME}.tar.gz\"!' >> '${BACLOG}';"
+    sudo bash -c "chown $USER:$USER /tmp/${BACNAME}.tar.gz"
+    sudo bash -c "ls -la /tmp/${BACNAME}.tar.gz >> '${BACLOG}';"
+    sudo bash -c "tar -tf ${BACNAME}.tar.gz >> '${BACLOG}';"
+else
+    sudo bash -c "echo '[${BACDATETIME}] Error: create backup file fail, exited!' >> '${BACLOG}';"
+    exit 1
+fi
 
 # GPG encript file array
 if [ ! -z $BACGPG ]; then
-
-    gpg --encrypt --sign --armor -r ${BACGPG} /tmp/${BACNAME}.tar.gz
+    sudo bash -c "echo 'GPG enc start: use key <${BACGPG}>, user run $USER' >> '${BACLOG}';"
+    gpg --sign-key ${BACGPG}
+    gpg --encrypt --no-tty --yes --armor -r ${BACGPG} /tmp/${BACNAME}.tar.gz
+    GPGLISTKEY=$(sudo -H -u $USER bash -c "gpg --list-key")
+    sudo bash -c "echo '$GPGLISTKEY' >> '${BACLOG}';"
 
     if [ -f /tmp/${BACNAME}.tar.gz.asc ]; then
-        rm -f /tmp/${BACNAME}.tar.gz && echo "[${BACDATETIME}] Remove /tmp/${BACNAME}.tar.gz" >> ${BACLOG}
-        echo "[${BACDATETIME}] Success GPG encrypt file array, new file:" >> ${BACLOG}
-        ls -la /tmp/${BACNAME}.tar.gz.asc >> ${BACLOG}
+        sudo bash -c "echo '[${BACDATETIME}] Success GPG encrypt file \"/tmp/${BACNAME}.tar.gz\", new encrypted file \"/tmp/${BACNAME}.tar.gz.asc\"' >> '${BACLOG}';"
+        sudo bash -c "rm -f /tmp/${BACNAME}.tar.gz" && sudo bash -c "echo '[${BACDATETIME}] Remove bacup file \"/tmp/${BACNAME}.tar.gz\"' >> '${BACLOG}';"
+        sudo bash -c "ls -la /tmp/${BACNAME}.tar.gz.asc >> '${BACLOG}';"
     else
-        echo "[${BACDATETIME}] Error GPG encrypt file array fail" >> ${BACLOG}
+        sudo bash -c "echo '[${BACDATETIME}] Error GPG encrypt file array fail' >> '${BACLOG}';"
         exit 1
     fi
 else
-    echo "[${BACDATETIME}] Error: The recipient's decryption key is not specified, specify it later in the file /etc/systemd/system/bac.service, otherwise it will not work!" >> ${BACLOG}
+    sudo bash -c "echo '[${BACDATETIME}] Error: The recipient's decryption key is not specified, specify it later in the file /etc/systemd/system/bac.service, otherwise it will not work!' >> '${BACLOG}';"
     exit 1
 fi
 
@@ -75,18 +100,19 @@ fi
 # Sending to the cloud
 if [ ! -z ${BACCONTAINER} ]; then
     if [ -f /tmp/${BACNAME}.tar.gz.asc ]; then		
-            s3cmd put /tmp/${BACNAME}.tar.gz.asc s3://${BACCONTAINER}
+        s3cmd put /tmp/${BACNAME}.tar.gz.asc s3://${BACCONTAINER}
+        sudo bash -c "echo '[${BACDATETIME}] Succes upload file to SELECTEL container: \"${BACCONTAINER}\"' >> '${BACLOG}';"
     else
-        echo "[${BACDATETIME}] Error: file /tmp/${BACNAME}.tar.gz.asc is not exist!" >> ${BACLOG}
+        sudo bash -c "echo '[${BACDATETIME}] Error: file \"/tmp/${BACNAME}.tar.gz.asc\" is not exist!' >> '${BACLOG}';"
         exit 1
     fi
 else
-    echo "[${BACDATETIME}] Error: container name is not defined, exited!" >> ${BACLOG}
+    sudo bash -c "echo '[${BACDATETIME}] Error: container name is not defined, exited!' >> '${BACLOG}';"
     exit 1
 fi
 
 
-echo "- - - - -" >> ${BACLOG}
+sudo bash -c "echo '--------------------------------' >> '${BACLOG}';"
 
-# clear tmp files
+# Clear tmp files
 rm -rf /tmp/${BACNAME}*

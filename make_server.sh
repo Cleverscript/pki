@@ -4,14 +4,14 @@ LOGIN=$1
 HOST=$2
 
 # remove .deb package
-rm -f pki_0.1.* && rm -f ovpn_0.1-1_* && rm -f client_0.1-1_*
+rm -f pki_0.1.* && rm -f ovpn_0.1-1_* && rm -f bac_0.1-1_* && rm -f client_0.1-1_*
 
 # generate .deb packets
 cd pki-0.1/debian && debuild -b
 cd ../../
 cd ovpn-0.1/debian && debuild -b
 cd ../../
-cd bcp-0.1/debian && debuild -b
+cd bac-0.1/debian && debuild -b
 cd ../../
 cd client-0.1/debian && debuild -b
 cd ../../
@@ -44,7 +44,7 @@ case "$UPLOAD" in
         fi
 
         # push new deb packets to remote server
-        scp pki_0.1-1_all.deb ovpn_0.1-1_all.deb ${LOGIN}@${HOST}:/home/${LOGIN}
+        scp pki_0.1-1_all.deb ovpn_0.1-1_all.deb bac_0.1-1_all.deb ${LOGIN}@${HOST}:/home/${LOGIN}
 
         read -p "Install packages to the server? [y/n]: " INSTALL
 

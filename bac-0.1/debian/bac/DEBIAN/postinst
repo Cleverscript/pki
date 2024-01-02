@@ -74,11 +74,18 @@ case "$1" in
 
             echo "\033[42m\033[30m +++ Install success completed! +++ \033[0m"
         
+            echo "\033[33m Config service \033[0m"
+            echo "\033[33m "
+            cat $BACSERVICE
+            echo " \033[0m"
+
             echo "\033[33m Activate the backup service by running the following commands: \033[0m"
 
             echo "\033[33m "
             echo "$ sudo systemctl enable bac.timer"
             echo "$ sudo systemctl start bac.timer"
+            echo "$ sudo systemctl enable bac.service"
+            echo "$ sudo systemctl start bac.service"
             echo "$ sudo systemctl status bac.timer"
             echo " \033[0m"
 
