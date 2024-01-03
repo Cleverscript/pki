@@ -28,6 +28,11 @@
 - [Документация для клиетов OpenVPN](https://github.com/Cleverscript/pki/blob/main/client_doc.pdf)
 
 
+#### Видео инструкции
+- [Видео инструкция для администратора PKI и OpenVPN сервера](https://youtu.be/vgHffGnCwzs)
+- [Видео инструкция для клиентов OpenVPN сервера](https://youtu.be/N3Ewlpm6LgE)
+
+
 #### Пакеты
 - [Пакет для PKI](https://github.com/Cleverscript/pki/blob/main/pki_0.1-1_all.deb)
 - [Пакет для OpenVPN](https://github.com/Cleverscript/pki/blob/main/ovpn_0.1-1_all.deb)
