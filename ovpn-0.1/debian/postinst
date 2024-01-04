@@ -94,6 +94,9 @@ case "$1" in
             echo -e "\033[33m WARNING: The IP of the Prometheus monitoring server is not specified; firewall rules (iptables) will need to be created independently! \033[0m"
         fi
         
+        # write server config
+        sed -i "s|#PROTO#|$PROTO|g" ${PATHOPENVPN}server.conf
+        sed -i "s|#PORT#|$PORT|g" ${PATHOPENVPN}server.conf        
 
         # iptables save
         sudo netfilter-persistent save
