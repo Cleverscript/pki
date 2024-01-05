@@ -76,9 +76,13 @@ case "$1" in
         # get IP prometheus server
         read -p "Please enter IP prometheus server: " PROMIP
         if [ ! -z "$PROMIP" ]; then
-            iptables -I INPUT -m tcp -p tcp --dport 9100 -s $PROMIP -j ACCEPT
+            # prometheus-node-exporter
             iptables -I INPUT -m tcp -p tcp --dport 9100 -s $PROMIP -j ACCEPT
             iptables -A INPUT -p tcp -m tcp --dport 9100 -j DROP
+
+            # prometheus-openvpn-exporter
+            iptables -I INPUT -m tcp -p tcp --dport 9176 -s $PROMIP -j ACCEPT
+            iptables -A INPUT -p tcp -m tcp --dport 9176 -j DROP
 
             echo "\033[33m Show status prometheus-node-exporter \033[0m\n"
             # sudo deb-systemd-helper enable 'prometheus-node-exporter' >/dev/null || true
